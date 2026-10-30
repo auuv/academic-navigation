@@ -1,0 +1,76 @@
+name: 更新周报并发布网站
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'README.md'
+  workflow_dispatch:
+  schedule:
+    # UTC: China time 00:17, 06:17, 12:17, 18:17. Avoid the busy hour boundary.
+    - cron: '17 4,10,16,22 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-pages
+  cancel-in-progress: false
+
+jobs:
+  collect-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pages: write
+    outputs:
+      readable: ${{ steps.collect.outputs.readable }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm test
+      - name: 检查来源并保留历史内容
+        id: collect
+        run: npm run collect
+      - name: 保存公开周报和来源访问间隔
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data/weekly.json data/crawl-schedule.json
+          if ! git diff --cached --quiet; then
+            git commit -m "更新公开周报数据"
+            git push origin HEAD:main
+          fi
+      - name: 构建并检查发布内容
+        run: npm run build
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: dist
+
+  deploy:
+    needs: collect-and-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 发布网站
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+      - name: 报告整体来源故障
+        if: needs.collect-and-build.outputs.readable == '0'
+        run: |
+          echo '所有来源本次均不可读取；已发布保留的历史内容，请检查来源记录。' >&2
+          exit 1

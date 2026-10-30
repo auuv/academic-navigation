@@ -1,0 +1,187 @@
+[
+  {
+    "id": "bbc",
+    "siteUrl": "https://www.bbc.com/",
+    "kind": "news",
+    "feedUrl": "https://feeds.bbci.co.uk/news/world/rss.xml",
+    "title": "BBC World",
+    "publisherId": "bbc.com",
+    "defaultRegion": "全球议题",
+    "articleHosts": [
+      "www.bbc.co.uk"
+    ]
+  },
+  {
+    "id": "ecfr",
+    "siteUrl": "https://ecfr.eu/",
+    "kind": "report",
+    "feedUrl": "https://ecfr.eu/feed/",
+    "title": "ECFR",
+    "publisherId": "ecfr.eu",
+    "defaultRegion": "全球议题",
+    "articleHosts": []
+  },
+  {
+    "id": "guardian",
+    "siteUrl": "https://www.theguardian.com/",
+    "kind": "news",
+    "feedUrl": "https://www.theguardian.com/world/rss",
+    "title": "The Guardian · World",
+    "publisherId": "theguardian.com",
+    "defaultRegion": "全球议题",
+    "articleHosts": []
+  },
+  {
+    "id": "csis",
+    "siteUrl": "https://www.csis.org/",
+    "kind": "report",
+    "feedUrl": "https://www.csis.org/analysis/feed",
+    "title": "CSIS",
+    "publisherId": "csis.org",
+    "defaultRegion": "全球议题",
+    "articleHosts": [],
+    "listingAdapter": "csis",
+    "entries": [
+      {
+        "url": "https://www.csis.org/analysis",
+        "type": "listing"
+      }
+    ]
+  },
+  {
+    "id": "cna",
+    "siteUrl": "https://www.channelnewsasia.com/",
+    "kind": "news",
+    "feedUrl": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6511",
+    "title": "CNA 亚洲新闻",
+    "publisherId": "channelnewsasia.com",
+    "defaultRegion": "东南亚",
+    "articleHosts": []
+  },
+  {
+    "id": "fulcrum",
+    "siteUrl": "https://fulcrum.sg/",
+    "kind": "report",
+    "feedUrl": "https://fulcrum.sg/feed/",
+    "title": "ISEAS · Fulcrum",
+    "publisherId": "iseas",
+    "defaultRegion": "东南亚",
+    "articleHosts": []
+  },
+  {
+    "id": "dw",
+    "siteUrl": "https://www.dw.com/en/top-stories/s-9097",
+    "kind": "news",
+    "feedUrl": "https://rss.dw.com/rdf/rss-en-all",
+    "title": "Deutsche Welle",
+    "publisherId": "dw.com",
+    "defaultRegion": "全球议题",
+    "articleHosts": []
+  },
+  {
+    "id": "bruegel",
+    "siteUrl": "https://www.bruegel.org/",
+    "kind": "report",
+    "feedUrl": "https://www.bruegel.org/rss.xml",
+    "title": "Bruegel",
+    "publisherId": "bruegel.org",
+    "defaultRegion": "全球议题",
+    "articleHosts": [],
+    "listingAdapter": "bruegel",
+    "entries": [
+      {
+        "url": "https://www.bruegel.org/rss.xml",
+        "type": "feed"
+      },
+      {
+        "url": "https://www.bruegel.org/publications",
+        "type": "listing"
+      }
+    ]
+  },
+  {
+    "id": "aljazeera",
+    "siteUrl": "https://www.aljazeera.com/",
+    "kind": "news",
+    "feedUrl": "https://www.aljazeera.com/xml/rss/all.xml",
+    "title": "Al Jazeera",
+    "publisherId": "aljazeera.com",
+    "defaultRegion": "全球议题",
+    "articleHosts": []
+  },
+  {
+    "id": "cfr",
+    "siteUrl": "https://www.cfr.org/",
+    "kind": "report",
+    "feedUrl": "https://www.cfr.org/rss.xml",
+    "title": "Council on Foreign Relations",
+    "publisherId": "cfr.org",
+    "defaultRegion": "全球议题",
+    "articleHosts": [],
+    "listingAdapter": "cfr",
+    "entries": [
+      {
+        "url": "https://www.cfr.org/",
+        "type": "listing"
+      }
+    ]
+  },
+  {
+    "id": "vnexpress",
+    "siteUrl": "https://e.vnexpress.net/",
+    "kind": "news",
+    "feedUrl": "https://e.vnexpress.net/rss/news.rss",
+    "title": "VnExpress International",
+    "publisherId": "e.vnexpress.net",
+    "defaultRegion": "东南亚",
+    "articleHosts": []
+  },
+  {
+    "id": "lowy",
+    "siteUrl": "https://www.lowyinstitute.org/",
+    "kind": "report",
+    "feedUrl": "https://www.lowyinstitute.org/the-interpreter/feed",
+    "title": "Lowy Institute · Interpreter",
+    "publisherId": "lowyinstitute.org",
+    "defaultRegion": "全球议题",
+    "articleHosts": []
+  },
+  {
+    "id": "brookings",
+    "siteUrl": "https://www.brookings.edu/",
+    "kind": "report",
+    "feedUrl": "https://www.brookings.edu/feed/",
+    "title": "Brookings Institution",
+    "publisherId": "brookings.edu",
+    "defaultRegion": "全球议题",
+    "articleHosts": [],
+    "listingAdapter": "brookings",
+    "entries": [
+      {
+        "url": "https://www.brookings.edu/",
+        "type": "listing"
+      },
+      {
+        "url": "https://www.brookings.edu/programs/foreign-policy/research-and-commentary/",
+        "type": "listing"
+      }
+    ]
+  },
+  {
+    "id": "iseas",
+    "siteUrl": "https://www.iseas.edu.sg/",
+    "kind": "report",
+    "feedUrl": "https://www.iseas.edu.sg/category/articles-commentaries/iseas-perspective/feed/",
+    "title": "ISEAS Perspective",
+    "publisherId": "iseas",
+    "defaultRegion": "东南亚",
+    "articleHosts": [],
+    "listingAdapter": "iseas",
+    "entries": [
+      {
+        "url": "https://www.iseas.edu.sg/",
+        "type": "listing"
+      }
+    ]
+  }
+]

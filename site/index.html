@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术黄页 · 全球与地区周报</title>
+    <link rel="stylesheet" href="styles.css?v=20261026-collection">
+    
+    <link rel="stylesheet" href="weekly-reports.css?v=20261030-refresh">
+    
+    <script src="resource-catalog.js?v=20261029-wos-cn-jcr" defer></script>
+    <script src="gas-project-catalog.js?v=20261026-gas" defer></script>
+    
+    <script src="deployment-config.js" defer></script>
+    <script src="weekly-core.js?v=20261030-sources" defer></script>
+    <script src="weekly-data.js?v=20261030-sources" defer></script>
+    <script src="weekly-reports.js?v=20261030-refresh" defer></script>
+    <script src="app.js?v=20261030-weekly" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="导航筛选">
+        <header class="brand">
+          <div class="brand-mark" aria-hidden="true">研</div>
+          <div>
+            <h1>学术黄页</h1>
+            <p>学术资源导航 / 全球与地区周报</p>
+          </div>
+        </header>
+
+        <label class="search-box" for="globalSearch">
+          <span aria-hidden="true">⌕</span>
+          <input id="globalSearch" type="search" placeholder="搜索全部资源" autocomplete="off">
+        </label>
+
+        <nav class="mode-tabs" aria-label="板块切换">
+          <button class="mode-tab is-active" type="button" data-mode="journals" aria-controls="journalsPanel" aria-pressed="true">期刊导航</button>
+          <button class="mode-tab" type="button" data-mode="thinktanks" aria-controls="thinkTankPanel" aria-pressed="false">智库导航</button>
+          <button class="mode-tab" type="button" data-mode="news" aria-controls="newsPanel" aria-pressed="false">新闻导航</button>
+          <button class="mode-tab" type="button" data-mode="weekly" aria-controls="weeklyPanel" aria-pressed="false">全球与地区周报</button>
+          <button class="mode-tab" type="button" data-mode="governments" aria-controls="governmentPanel" aria-pressed="false">政府网站</button>
+          <button class="mode-tab" type="button" data-mode="ai" aria-controls="aiPanel" aria-pressed="false">AI动态</button>
+          
+        </nav>
+
+        <nav class="project-navigation" aria-label="研究项目">
+          <div class="block-title">研究项目</div>
+          <button class="mode-tab project-tab" type="button" data-mode="gas" aria-controls="gasPanel" aria-pressed="false">天然气管道与 LNG 运输</button>
+        </nav>
+
+        
+
+        <section class="filter-block" data-mode-control="journals thinktanks news governments ai  gas" aria-labelledby="resourceFiltersTitle">
+          <div class="block-title" id="resourceFiltersTitle">资源分类</div>
+          <div id="resourceCategoryList" class="chip-list"></div>
+        </section>
+
+
+      <p class="cloud-note">GitHub 版 · 周报约每 6 小时自动更新，星标保存在当前浏览器。</p></aside>
+
+      <main class="main-panel">
+        <section id="weeklyPanel" class="panel-section" hidden aria-labelledby="weeklyTitle">
+          <header class="section-header weekly-header"><div><p class="eyebrow">Global &amp; Regional Weekly</p><h2 id="weeklyTitle">全球与地区形势周报</h2></div><div class="weekly-total"><strong id="weeklyCount">0</strong>条目</div></header>
+          <p id="weeklyPeriod" class="weekly-period"></p>
+          <div class="weekly-toolbar">
+            <div class="weekly-week-control"><button id="weeklyPrevious" class="weekly-icon" type="button" title="上一期" aria-label="上一期"><img src="icons/chevron-left.svg" alt=""></button><label><span>周次</span><select id="weeklyWeek"></select></label><button id="weeklyNext" class="weekly-icon" type="button" title="下一期" aria-label="下一期"><img src="icons/chevron-right.svg" alt=""></button></div>
+            <label><span>地区</span><select id="weeklyRegion"></select></label>
+            <div class="weekly-types" role="group" aria-label="周报内容类型"><button type="button" data-weekly-kind="all" aria-pressed="true">全部</button><button type="button" data-weekly-kind="news" aria-pressed="false">新闻</button><button type="button" data-weekly-kind="report" aria-pressed="false">智库报告与分析</button></div>
+            <button id="weeklyRefresh" class="weekly-command" type="button" aria-busy="false"><img src="icons/refresh-cw.svg" alt=""><span id="weeklyRefreshLabel">刷新周报</span></button><a id="weeklyAdmin" class="weekly-command" target="_blank" rel="noopener noreferrer" title="管理员登录 GitHub 后可提前触发采集；普通访客无需登录" hidden>管理更新</a><button id="weeklyExport" class="weekly-icon" type="button" title="导出当前周报" aria-label="导出当前周报"><img src="icons/download.svg" alt=""></button>
+          </div>
+          <p id="weeklyStatus" class="weekly-status" role="status" aria-live="polite"></p>
+          <details class="weekly-method"><summary>筛选依据与本期覆盖</summary><p>优先收录政策变化、政治结果、冲突进展和具有公共影响的事件；同一事件的相近标题合并展示，增加不同发布方关注的权重。智库文章保留不同分析视角。依据公开标题与订阅摘要初筛，属于线索整理，多来源关注不表示事实已核验。</p><p id="weeklyScreening"></p><div id="weeklyCoverage" class="weekly-coverage"></div><p>覆盖数量为本期符合入选门槛的候选，跨地区内容会重复计入相应地区；零篇表示当前来源未收录，不代表该地区没有重要事件。</p></details>
+          <div class="weekly-columns"><section id="weeklyNewsSection" class="weekly-section" aria-labelledby="weeklyNewsTitle"><h3 id="weeklyNewsTitle">重要新闻 <span id="weeklyNewsCount">0</span></h3><div id="weeklyNewsItems"></div></section><section id="weeklyReportsSection" class="weekly-section" aria-labelledby="weeklyReportsTitle"><h3 id="weeklyReportsTitle">智库报告与分析 <span id="weeklyReportsCount">0</span></h3><div id="weeklyReportsItems"></div></section></div>
+          <details id="weeklySourceDetails" class="weekly-sources" hidden><summary id="weeklySourceTitle">来源与覆盖</summary><div id="weeklySourceItems"></div></details>
+        </section>
+        <section id="gasPanel" class="panel-section" hidden aria-labelledby="gasTitle">
+          <header class="section-header">
+            <div>
+              <p class="eyebrow">Gas Pipelines &amp; LNG Shipping</p>
+              <h2 id="gasTitle">天然气管道与 LNG 运输</h2>
+              <p>跨境管网、液化与接收站、海上运输、能源贸易与供应安全。</p>
+            </div>
+            <div class="counter-card"><strong id="gasCount">0</strong><span>匹配来源</span></div>
+          </header>
+          <div class="project-toolbar">
+            <label for="gasRegion">地区<select id="gasRegion"></select></label>
+            <label for="gasAccess">访问条件<select id="gasAccess"></select></label>
+            <span class="project-date">整理于 2026-10-26</span>
+          </div>
+          <div id="gasGrid" class="card-grid"></div>
+        </section>
+
+        <section id="journalsPanel" class="panel-section" aria-labelledby="journalsTitle">
+          <header class="section-header">
+            <div>
+              <p class="eyebrow">Journal Navigator</p>
+              <h2 id="journalsTitle">期刊导航</h2>
+              <p>按学科和研究用途分类，点击卡片即可打开期刊官网或投稿入口。</p>
+            </div>
+            <div class="counter-card">
+              <strong id="journalCount">0</strong>
+              <span>匹配期刊</span>
+            </div>
+          </header>
+
+          <div id="journalGrid" class="card-grid"></div>
+        </section>
+
+        <section id="thinkTankPanel" class="panel-section" hidden aria-labelledby="thinkTankTitle">
+          <header class="section-header">
+            <div>
+              <p class="eyebrow">Think Tank Navigator</p>
+              <h2 id="thinkTankTitle">智库导航</h2>
+              <p>按政策、国际关系、安全、区域研究等用途整理，点击卡片打开对应智库官网。</p>
+            </div>
+            <div class="counter-card">
+              <strong id="thinkTankCount">0</strong>
+              <span>匹配智库</span>
+            </div>
+          </header>
+
+          <div id="thinkTankGrid" class="card-grid"></div>
+        </section>
+
+        <section id="newsPanel" class="panel-section" hidden aria-labelledby="newsTitle">
+          <header class="section-header">
+            <div>
+              <p class="eyebrow">News Navigator</p>
+              <h2 id="newsTitle">新闻导航</h2>
+              <p>整理中文新闻、国际通讯社、财经新闻和新闻数据库入口，便于跟踪事件和做文本研究。</p>
+            </div>
+            <div class="counter-card">
+              <strong id="newsCount">0</strong>
+              <span>匹配来源</span>
+            </div>
+          </header>
+
+          <div id="newsGrid" class="card-grid"></div>
+        </section>
+
+        <section id="governmentPanel" class="panel-section" hidden aria-labelledby="governmentTitle">
+          <header class="section-header">
+            <div>
+              <p class="eyebrow">Government Navigator</p>
+              <h2 id="governmentTitle">政府网站</h2>
+              <p>整理官方门户、外交、商务、统计、科技政策和多边机构入口，适合核对政策原文、声明、法规和官方数据。</p>
+            </div>
+            <div class="counter-card">
+              <strong id="governmentCount">0</strong>
+              <span>匹配网站</span>
+            </div>
+          </header>
+
+          <div id="governmentGrid" class="card-grid"></div>
+        </section>
+
+        <section id="aiPanel" class="panel-section" hidden aria-labelledby="aiTitle">
+          <header class="section-header">
+            <div>
+              <p class="eyebrow">AI Signal Desk</p>
+              <h2 id="aiTitle">AI动态</h2>
+              <p>整理 AI 公司、研究实验室、开源社区和安全评测机构的官方发布入口，优先用于核对原文。</p>
+            </div>
+            <div class="counter-card">
+              <strong id="aiCount">0</strong>
+              <span>匹配平台</span>
+            </div>
+          </header>
+
+          <div id="aiGrid" class="card-grid"></div>
+        </section>
+
+        <section id="documentsPanel" class="panel-section" hidden aria-labelledby="documentsTitle"><span id="documentCount">0</span><div id="documentSummary"></div><div id="documentGrid"></div></section>
+      </main>
+    </div>
+    
+  </body>
+</html>
