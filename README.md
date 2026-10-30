@@ -2,6 +2,8 @@
 
 学术期刊、智库、新闻媒体、政府、国际组织、AI 与能源项目导航，以及全球与各地区形势周报。网页公开浏览，无需 ChatGPT 或 GitHub 登录；星标保存在当前浏览器。
 
+网站：<https://auuv.github.io/academic-navigation/> · [全球与地区周报](https://auuv.github.io/academic-navigation/#weekly) · [管理员更新与运行记录](https://github.com/auuv/academic-navigation/actions/workflows/weekly-pages.yml)
+
 ## 托管和更新
 
 GitHub Pages 发布 `site/` 生成的静态网页。GitHub Actions 每天北京时间 **00:17、06:17、12:17、18:17** 检查来源并重新发布。定时任务可能延迟；公开仓库连续 60 天没有活动时，GitHub 可能停用定时工作流。
