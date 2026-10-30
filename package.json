@@ -9,6 +9,7 @@
     "collect": "node scripts/collect-weekly.mjs",
     "build": "node scripts/build.mjs",
     "preview": "node scripts/preview.mjs",
+    "local": "node backend/local.mjs",
     "start:collection": "node backend/server.mjs"
   },
   "dependencies": {

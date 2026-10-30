@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .cache/
+.local-collection/
 outputs/
 .env
 .env.*

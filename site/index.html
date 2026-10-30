@@ -182,7 +182,7 @@
       <header class="collection-header"><div><p class="eyebrow">Research Collection</p><h2 id="collectionTitle">AI 采集</h2></div><button id="collectionClose" class="collection-icon-button" type="button" title="关闭" aria-label="关闭采集窗口"><img src="icons/x.svg" alt="" width="20" height="20" /></button></header>
       <section id="collectionLoginView" class="collection-settings" hidden>
 <form id="collectionLogin"><h3>登录采集管理</h3><p class="collection-muted">管理员可启动采集、设置模型并查看私有记录。</p><label><span>管理密码</span><input id="collectionAdminPassword" type="password" autocomplete="current-password" required maxlength="256" /></label><button type="submit" class="collection-command is-primary">登录</button><p id="collectionLoginStatus" role="status" aria-live="polite"></p></form></section>
-<div id="collectionAuthenticated" hidden><div class="collection-auth-bar"><span>已登录采集管理</span><button id="collectionLogout" type="button" class="collection-command">退出登录</button></div>
+<div id="collectionAuthenticated" hidden><div class="collection-auth-bar"><span id="collectionConnectionLabel">已登录采集管理</span><button id="collectionLogout" type="button" class="collection-command">退出登录</button></div>
 <div class="collection-tabs" role="tablist" aria-label="采集视图">
         <button type="button" role="tab" id="collectionCaptureTab" data-collection-tab="capture" aria-controls="collectionCaptureView" aria-selected="true">采集任务</button>
         <button type="button" role="tab" id="collectionHistoryTab" data-collection-tab="history" aria-controls="collectionHistoryView" aria-selected="false" tabindex="-1">已保存</button>
@@ -212,7 +212,7 @@
           <label><span>GitHub Token（可选）</span><input id="collectionGithubToken" type="password" autocomplete="new-password" maxlength="4096" placeholder="不填则匿名访问公开仓库" /></label>
           <a class="collection-provider-link" href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener noreferrer">GitHub Token 管理<img src="icons/external-link.svg" alt="" width="14" height="14" /></a>
           <label class="collection-check"><input id="collectionGithubClearToken" type="checkbox" /><span>清除已保存 GitHub Token</span></label>
-          <p class="collection-muted">Token 加密保存在云端，仅发送至 api.github.com。只读公开仓库，不读取私有内容；AI 分析时公开正文发送至已配置的模型服务商。</p>
+          <p id="collectionGithubPrivacy" class="collection-muted">Token 加密保存在云端，仅发送至 api.github.com。只读公开仓库，不读取私有内容；AI 分析时公开正文发送至已配置的模型服务商。</p>
           <div class="collection-task-actions"><button class="collection-command is-primary" type="submit"><img src="icons/save.svg" alt="" width="18" height="18" />保存并加入来源</button><button id="collectionGithubTest" class="collection-command" type="button"><img src="icons/plug.svg" alt="" width="18" height="18" />保存并测试连接</button></div>
           <p id="collectionGithubStatus" class="collection-status" role="status" aria-live="polite"></p>
         </form>
@@ -225,7 +225,7 @@
           <label><span>API Key</span><input id="collectionKey" type="password" autocomplete="new-password" placeholder="输入 API Key" /></label>
           <a id="collectionKeyLink" class="collection-provider-link" href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener noreferrer" hidden>DeepSeek 密钥管理<img src="icons/external-link.svg" alt="" width="14" height="14" /></a>
           <label class="collection-check"><input id="collectionClearKey" type="checkbox" /><span>清除已保存密钥</span></label>
-          <p class="collection-muted">密钥加密保存在云端。抓取并分析时，主题与所选网页正文将发送至此 API 服务商。</p>
+          <p id="collectionModelPrivacy" class="collection-muted">密钥加密保存在云端。抓取并分析时，主题与所选网页正文将发送至此 API 服务商。</p>
           <div class="collection-task-actions"><button class="collection-command is-primary" type="submit"><img src="icons/save.svg" alt="" width="18" height="18" />保存配置</button><button id="collectionTestModel" class="collection-command" type="button">保存并测试连接</button></div>
           <p id="collectionSettingsStatus" class="collection-status" role="status" aria-live="polite"></p>
         </form>

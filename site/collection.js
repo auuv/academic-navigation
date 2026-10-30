@@ -232,7 +232,7 @@
     if (!cloud.ready(() => open(source, view))) return;
     tab(view);
     try {
-      if (!initialized) { status("正在读取云端采集配置…"); await initialize(); }
+      if (!initialized) { status("正在读取采集配置…"); await initialize(); }
       if (source) {
         const id = typeof source === "string" ? source : `${source.mode}:${source.url}`;
         const entry = sources.find((entry) => entry.id === id);

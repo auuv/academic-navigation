@@ -45,6 +45,7 @@ test("all settings, jobs and exports require login and foreign origins cannot co
   }
   assert.equal((await f.call("/api/collection/jobs", { body: { sourceIds: [source.id] } })).status, 401);
   assert.equal((await f.call("/healthz")).status, 200);
+  assert.equal((await f.call("/api/auth/local-session", { body: {} })).status, 401, "cloud service never enables local automatic sessions");
   const denied = await f.call("/api/auth/login", { origin: "https://other.example.org", body: { password } });
   assert.equal(denied.status, 403); assert.equal(denied.headers.get("Access-Control-Allow-Origin"), null);
   assert.equal(f.calls.length, 0);
