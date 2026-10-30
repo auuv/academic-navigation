@@ -1,0 +1,36 @@
+# This creates a paid service and a persistent disk. Review Render's estimate
+# before applying this Blueprint; the free service cannot preserve this data.
+services:
+  - type: web
+    name: academic-navigation-collection
+    runtime: docker
+    plan: 0.5c-512mb
+    region: singapore
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    numInstances: 1
+    autoDeployTrigger: off
+    buildFilter:
+      paths:
+        - backend/**
+        - site/resource-catalog.js
+        - site/gas-project-catalog.js
+        - Dockerfile
+        - package.json
+        - package-lock.json
+        - render.yaml
+    disk:
+      name: collection-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: COLLECTION_ADMIN_PASSWORD
+        sync: false
+      - key: STORAGE_ENCRYPTION_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://auuv.github.io
+      - key: COLLECTION_DATA_DIR
+        value: /data/collection

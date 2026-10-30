@@ -9,12 +9,17 @@ await fs.rm(target, { recursive: true, force: true });
 await fs.cp(source, target, { recursive: true });
 const repository = process.env.GITHUB_REPOSITORY || "";
 if (repository && !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repository)) throw new Error("Invalid GitHub repository");
-await fs.writeFile(path.join(target, "deployment-config.js"), `window.SiteConfig = ${JSON.stringify({ repository })};\n`);
+const collectionApiBase = process.env.COLLECTION_API_BASE_URL || "";
+if (collectionApiBase) {
+  const url = new URL(collectionApiBase);
+  if (url.protocol !== "https:" || url.username || url.password || url.search || url.hash || url.pathname !== "/" || url.port) throw new Error("Collection API must be an HTTPS origin");
+}
+await fs.writeFile(path.join(target, "deployment-config.js"), `window.SiteConfig = ${JSON.stringify({ repository, collectionApiBase })};\n`);
 const snapshot = JSON.parse(await fs.readFile(path.join(target, "data/weekly.json"), "utf8"));
 if (snapshot.schemaVersion !== 1 || !Array.isArray(snapshot.items) || !Array.isArray(snapshot.sources)) throw new Error("Invalid weekly data");
 await fs.writeFile(path.join(target, "weekly-data.js"), `window.WeeklyData = ${JSON.stringify(snapshot).replace(/</g, "\\u003c")};\n`);
 await fs.writeFile(path.join(target, ".nojekyll"), "");
-const privatePatterns = /\/Users\/|file:\/\/|127\.0\.0\.1|localhost|\/api\/(?:weekly-reports|local-documents|open-local-document)|chatgpt\.site|collectionKey|collectionDialog|gh[pousr]_[A-Za-z0-9]{20}|github_pat_|sk-[A-Za-z0-9]{20}/;
+const privatePatterns = /\/Users\/|file:\/\/|127\.0\.0\.1|localhost|\/api\/(?:weekly-reports|local-documents|open-local-document)|chatgpt\.site|gh[pousr]_[A-Za-z0-9]{20}|github_pat_|sk-[A-Za-z0-9]{20}/;
 async function scan(directory) {
   for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
     const file = path.join(directory, entry.name);

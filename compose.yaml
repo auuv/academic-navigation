@@ -1,0 +1,25 @@
+# For an existing server. Put HTTPS in front of this loopback-only port.
+services:
+  collection:
+    build: .
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 10s
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      COLLECTION_ADMIN_PASSWORD: ${COLLECTION_ADMIN_PASSWORD:?Set a password of at least 16 characters}
+      STORAGE_ENCRYPTION_KEY: ${STORAGE_ENCRYPTION_KEY:?Set a Base64-encoded 32-byte key}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://auuv.github.io}
+      COLLECTION_DATA_DIR: /data/collection
+      PORT: "8080"
+    volumes:
+      - collection-data:/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+volumes:
+  collection-data:

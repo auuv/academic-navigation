@@ -4,6 +4,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../dist/", import.meta.url));
+const collectionPreviewApi = process.env.COLLECTION_PREVIEW_API || "";
+if (collectionPreviewApi) {
+  const url = new URL(collectionPreviewApi);
+  if (url.origin !== collectionPreviewApi || url.username || url.password || url.search || url.hash || !["https:", "http:"].includes(url.protocol)) throw new Error("Invalid preview API origin");
+}
 const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".svg": "image/svg+xml" };
 http.createServer(async (req, res) => {
   try {
@@ -12,6 +17,10 @@ http.createServer(async (req, res) => {
     const url = new URL(req.url, "http://preview.invalid");
     if (!url.pathname.startsWith("/academic-navigation/")) { res.writeHead(302, { Location: "/academic-navigation/" }); res.end(); return; }
     const name = decodeURIComponent(url.pathname.slice("/academic-navigation/".length)) || "index.html";
+    if (name === "deployment-config.js" && collectionPreviewApi) {
+      res.writeHead(200, { "Content-Type": types[".js"], "Cache-Control": "no-store" });
+      res.end(`window.SiteConfig = ${JSON.stringify({ repository: "auuv/academic-navigation", collectionApiBase: collectionPreviewApi })};\n`); return;
+    }
     const file = path.resolve(root, name);
     if (!file.startsWith(root)) throw new Error();
     const body = await fs.readFile(file);

@@ -71,9 +71,9 @@ test("long crawl intervals persist in the database across Worker instances", asy
   assert.equal(f.calls.length, calls + 1, "only robots may be rechecked before the next content slot");
   clock += 600001; assert.equal((await createWeeklyCollector(f.options).refresh()).sources[0].state, "completed");
 });
-test("online assets contain no local documents, file paths, localhost requests or credential forms", async () => {
-  for (const file of ["index.html", "app.js", "weekly-reports.js", "weekly-data.js"]) {
+test("online assets contain no local documents, file paths, localhost requests or private keys", async () => {
+  for (const file of ["index.html", "app.js", "weekly-reports.js", "weekly-data.js", "collection.js", "collection-cloud.js"]) {
     const text = await fs.readFile(new URL(`../site/${file}`, import.meta.url), "utf8");
-    assert.ok(!/\/Users\/|file:\/\/|127\.0\.0\.1|api\/local-documents|collectionKey|collectionDialog/.test(text), file);
+    assert.ok(!/\/Users\/|file:\/\/|127\.0\.0\.1|api\/local-documents|github_pat_|gh[pousr]_[A-Za-z0-9]{20}|sk-[A-Za-z0-9]{20}/.test(text), file);
   }
 });

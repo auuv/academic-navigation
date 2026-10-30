@@ -6,6 +6,7 @@
     <title>学术黄页 · 全球与地区周报</title>
     <link rel="stylesheet" href="styles.css?v=20261026-collection">
     
+    <link rel="stylesheet" href="collection.css?v=20261030-cloud">
     <link rel="stylesheet" href="weekly-reports.css?v=20261030-refresh">
     
     <script src="resource-catalog.js?v=20261029-wos-cn-jcr" defer></script>
@@ -15,6 +16,8 @@
     <script src="weekly-core.js?v=20261030-sources" defer></script>
     <script src="weekly-data.js?v=20261030-sources" defer></script>
     <script src="weekly-reports.js?v=20261030-refresh" defer></script>
+    <script src="collection-cloud.js?v=20261030-cloud" defer></script>
+    <script src="collection.js?v=20261030-cloud" defer></script>
     <script src="app.js?v=20261030-weekly" defer></script>
   </head>
   <body>
@@ -56,6 +59,7 @@
         </section>
 
 
+      <section class="cloud-collection-entry"><button id="collectionOpen" type="button" class="collection-command">AI 采集</button><p>选取导航来源，按主题抓取和整理。</p></section>
       <p class="cloud-note">GitHub 版 · 周报约每 6 小时自动更新，星标保存在当前浏览器。</p></aside>
 
       <main class="main-panel">
@@ -174,5 +178,59 @@
       </main>
     </div>
     
+    <dialog id="collectionDialog" aria-labelledby="collectionTitle">
+      <header class="collection-header"><div><p class="eyebrow">Research Collection</p><h2 id="collectionTitle">AI 采集</h2></div><button id="collectionClose" class="collection-icon-button" type="button" title="关闭" aria-label="关闭采集窗口"><img src="icons/x.svg" alt="" width="20" height="20" /></button></header>
+      <section id="collectionLoginView" class="collection-settings" hidden>
+<form id="collectionLogin"><h3>登录采集管理</h3><p class="collection-muted">管理员可启动采集、设置模型并查看私有记录。</p><label><span>管理密码</span><input id="collectionAdminPassword" type="password" autocomplete="current-password" required maxlength="256" /></label><button type="submit" class="collection-command is-primary">登录</button><p id="collectionLoginStatus" role="status" aria-live="polite"></p></form></section>
+<div id="collectionAuthenticated" hidden><div class="collection-auth-bar"><span>已登录采集管理</span><button id="collectionLogout" type="button" class="collection-command">退出登录</button></div>
+<div class="collection-tabs" role="tablist" aria-label="采集视图">
+        <button type="button" role="tab" id="collectionCaptureTab" data-collection-tab="capture" aria-controls="collectionCaptureView" aria-selected="true">采集任务</button>
+        <button type="button" role="tab" id="collectionHistoryTab" data-collection-tab="history" aria-controls="collectionHistoryView" aria-selected="false" tabindex="-1">已保存</button>
+        <button type="button" role="tab" id="collectionModelTab" data-collection-tab="settings" aria-controls="collectionSettingsView" aria-selected="false" tabindex="-1">模型设置</button>
+        <button type="button" role="tab" id="collectionGithubTab" data-collection-tab="github" aria-controls="collectionGithubView" aria-selected="false" tabindex="-1">GitHub 接口</button>
+      </div>
+      <section id="collectionCaptureView" role="tabpanel" aria-labelledby="collectionCaptureTab" data-collection-view="capture">
+        <div class="collection-source-heading"><h3>网站来源</h3><div class="collection-source-tools"><label class="collection-check"><input id="collectionSelectAll" type="checkbox" /><span>全选筛选结果</span></label><button id="collectionClearSources" class="collection-icon-button" type="button" title="清空已选来源" aria-label="清空已选来源"><img src="icons/x.svg" alt="" width="18" height="18" /></button><span id="collectionSelectedCount">0 / 0</span></div></div>
+        <div class="collection-source-filters"><label><span>板块</span><select id="collectionSourceMode"><option value="all">全部板块</option></select></label><label><span>筛选来源</span><input id="collectionSourceQuery" type="search" placeholder="网站、机构或分类" /></label></div>
+        <div id="collectionSources" class="collection-source-list" aria-label="可采集来源"></div>
+        <div id="collectionSelection" class="collection-selection" aria-label="已选来源"></div>
+        <div class="collection-task-fields"><label class="collection-topic-field"><span>关注主题</span><input id="collectionTopic" type="text" maxlength="500" placeholder="例如：东南亚能源安全、LNG 运输" /></label><label><span>收录上限（合计）</span><input id="collectionLimit" type="number" min="1" max="100" value="10" required /></label><label><span>相关性要求</span><select id="collectionRelevance"><option value="related">相关及高度相关</option><option value="high">仅高度相关</option></select></label><label class="collection-article-url"><span>具体文章网址（可选，限单一来源）</span><input id="collectionArticleUrl" type="url" placeholder="https://" disabled /></label></div>
+        <details class="collection-budget"><summary>采集预算</summary><div class="collection-budget-fields"><label><span>候选扫描上限</span><input id="collectionCandidateLimit" type="number" min="10" max="1000" value="200" required title="候选正文与栏目检查上限，不含来源入口和订阅" /></label><label><span>AI 请求上限</span><input id="collectionAiLimit" type="number" min="1" max="300" value="60" required title="包含关键词扩展、相关性核验、摘要和参数兼容重试" /></label></div></details>
+        <div class="collection-task-actions"><button id="collectionPreview" class="collection-command" type="button" disabled><img src="icons/file-down.svg" alt="" width="18" height="18" />仅抓取原文</button><button id="collectionAnalyze" class="collection-command is-primary" type="button" disabled><img src="icons/sparkles.svg" alt="" width="18" height="18" />AI 筛选并分析</button><button id="collectionStop" class="collection-icon-button" type="button" title="停止采集" aria-label="停止采集" hidden><img src="icons/square.svg" alt="" width="18" height="18" /></button><span id="collectionProviderStatus" class="collection-muted">AI 整理尚未配置模型</span></div>
+        <p id="collectionStatus" class="collection-status" role="status" aria-live="polite">选择来源后开始采集。</p>
+        <div class="collection-result-heading"><h3 id="collectionTaskTitle">本次结果</h3><button id="collectionDownload" class="collection-icon-button" type="button" title="导出 Markdown" aria-label="导出采集结果" disabled><img src="icons/download.svg" alt="" width="18" height="18" /></button></div>
+        <details id="collectionPlan" hidden><summary>主题关键词与预算</summary><div id="collectionPlanContent" class="collection-muted"></div></details>
+        <details id="collectionSourceReport" hidden><summary id="collectionSourceReportTitle">来源覆盖与诊断</summary><p id="collectionSourceReportStop" class="collection-muted"></p><div id="collectionSourceReportRows" class="collection-source-report-rows"></div></details>
+        <div id="collectionResults"></div>
+        <details id="collectionExcluded" hidden><summary id="collectionExcludedTitle">排除记录</summary><div id="collectionExcludedItems" class="collection-excluded-items"></div></details>
+      </section>
+      <section id="collectionHistoryView" role="tabpanel" aria-labelledby="collectionHistoryTab" data-collection-view="history" hidden><h3>采集记录</h3><div id="collectionHistory"></div></section>
+      <section id="collectionGithubView" role="tabpanel" aria-labelledby="collectionGithubTab" data-collection-view="github" hidden>
+        <form id="collectionGithubSettings" class="collection-settings">
+          <label><span>公开仓库（每行一个，最多 30 个）</span><textarea id="collectionGithubRepositories" rows="4" maxlength="10000" spellcheck="false" placeholder="owner/repository&#10;https://github.com/owner/repository"></textarea></label>
+          <label><span>采集内容</span><select id="collectionGithubContent"><option value="both">README 与版本发布</option><option value="readme">仓库介绍与 README</option><option value="releases">版本发布（最新 20 条）</option></select></label>
+          <label><span>GitHub Token（可选）</span><input id="collectionGithubToken" type="password" autocomplete="new-password" maxlength="4096" placeholder="不填则匿名访问公开仓库" /></label>
+          <a class="collection-provider-link" href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener noreferrer">GitHub Token 管理<img src="icons/external-link.svg" alt="" width="14" height="14" /></a>
+          <label class="collection-check"><input id="collectionGithubClearToken" type="checkbox" /><span>清除已保存 GitHub Token</span></label>
+          <p class="collection-muted">Token 加密保存在云端，仅发送至 api.github.com。只读公开仓库，不读取私有内容；AI 分析时公开正文发送至已配置的模型服务商。</p>
+          <div class="collection-task-actions"><button class="collection-command is-primary" type="submit"><img src="icons/save.svg" alt="" width="18" height="18" />保存并加入来源</button><button id="collectionGithubTest" class="collection-command" type="button"><img src="icons/plug.svg" alt="" width="18" height="18" />保存并测试连接</button></div>
+          <p id="collectionGithubStatus" class="collection-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <section id="collectionSettingsView" role="tabpanel" aria-labelledby="collectionModelTab" data-collection-view="settings" hidden>
+        <form id="collectionSettings" class="collection-settings">
+          <label><span>服务商</span><select id="collectionProvider"><option value="custom">自定义（OpenAI 兼容）</option><option value="deepseek">DeepSeek</option></select></label>
+          <label><span>API 地址（兼容 OpenAI Chat Completions）</span><input id="collectionApiBase" type="url" required placeholder="https://api.openai.com/v1" /></label>
+          <label><span>模型名称</span><input id="collectionModel" type="text" maxlength="120" required placeholder="服务商提供的模型名称" /></label>
+          <label><span>API Key</span><input id="collectionKey" type="password" autocomplete="new-password" placeholder="输入 API Key" /></label>
+          <a id="collectionKeyLink" class="collection-provider-link" href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener noreferrer" hidden>DeepSeek 密钥管理<img src="icons/external-link.svg" alt="" width="14" height="14" /></a>
+          <label class="collection-check"><input id="collectionClearKey" type="checkbox" /><span>清除已保存密钥</span></label>
+          <p class="collection-muted">密钥加密保存在云端。抓取并分析时，主题与所选网页正文将发送至此 API 服务商。</p>
+          <div class="collection-task-actions"><button class="collection-command is-primary" type="submit"><img src="icons/save.svg" alt="" width="18" height="18" />保存配置</button><button id="collectionTestModel" class="collection-command" type="button">保存并测试连接</button></div>
+          <p id="collectionSettingsStatus" class="collection-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+</div>
+    </dialog>
   </body>
 </html>
