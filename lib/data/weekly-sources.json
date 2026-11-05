@@ -59,6 +59,29 @@
     "articleHosts": []
   },
   {
+    "id": "cna-world",
+    "siteUrl": "https://www.channelnewsasia.com/",
+    "kind": "news",
+    "feedUrl": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6311",
+    "title": "CNA · 国际新闻与通讯社稿件",
+    "publisherId": "channelnewsasia.com",
+    "defaultRegion": "全球议题",
+    "articleHosts": [],
+    "verifyCnaCredit": true
+  },
+  {
+    "id": "ap",
+    "siteUrl": "https://apnews.com/",
+    "kind": "news",
+    "feedUrl": "https://flipboard.com/@associatedpress/top-stories-u7govdf1z.rss",
+    "title": "美联社 AP · 头条",
+    "publisherId": "apnews.com",
+    "defaultRegion": "全球议题",
+    "articleHosts": [],
+    "articlePathPrefix": "/article/",
+    "linkOnly": true
+  },
+  {
     "id": "fulcrum",
     "siteUrl": "https://fulcrum.sg/",
     "kind": "report",
@@ -273,5 +296,17 @@
     "publisherId": "theguardian.com",
     "defaultRegion": "全球议题",
     "articleHosts": []
+  },
+  {
+    "id": "upi",
+    "siteUrl": "https://www.upi.com/",
+    "kind": "news",
+    "feedUrl": "https://rss.upi.com/news/tn_int.rss",
+    "title": "合众国际社 UPI · 世界新闻",
+    "publisherId": "upi.com",
+    "defaultRegion": "全球议题",
+    "articleHosts": [],
+    "articlePathPrefix": "/Top_News/World-News/",
+    "linkOnly": true
   }
 ]

@@ -94,6 +94,43 @@ test("weekly news subscriptions are anchored in the news directory", () => {
   assert.equal(news.find((row) => row.id === "guardian-americas").publisherId, news.find((row) => row.id === "guardian").publisherId);
 });
 
+test("AP's hosted subscription only admits AP article links", async (t) => {
+  const ap = weeklySources.find((row) => row.id === "ap");
+  const url = "https://apnews.com/article/trade-law";
+  const rss = `<rss><channel>
+    <item><title>EU parliament approves new trade law</title><link>${url}</link><pubDate>Thu, 29 Oct 2026 08:00:00 GMT</pubDate><description>Body excerpt</description></item>
+    <item><title>EU parliament approves new trade law</title><link>https://flipboard.com/video/reuters/123</link><pubDate>Thu, 29 Oct 2026 08:00:00 GMT</pubDate></item>
+  </channel></rss>`;
+  const f = await fixture(t, { sourceList: [ap], transport: () => new Response(rss) });
+  const data = await f.service.refresh();
+  assert.deepEqual(data.items.map((row) => row.url), [url]);
+  assert.equal(data.items[0].excerpt, "");
+  assert.equal(data.sources[0].skipped.external, 1);
+});
+
+test("CNA article credit persists and ignores photo credits or unclear attribution", async (t) => {
+  const cna = weeklySources.find((row) => row.id === "cna-world");
+  const url = cna.siteUrl + "world/trade-law-123";
+  const otherUrl = cna.siteUrl + "world/other-law-456";
+  const rss = `<rss><channel>
+    <item><title>EU parliament approves new trade law</title><link>${url}</link><pubDate>Thu, 29 Oct 2026 08:00:00 GMT</pubDate></item>
+    <item><title>Canada approves tariff law</title><link>${otherUrl}</link><pubDate>Thu, 29 Oct 2026 08:00:00 GMT</pubDate></item>
+  </channel></rss>`;
+  const f = await fixture(t, { sourceList: [cna], transport: (input) => {
+    if (input === cna.feedUrl) return new Response(rss);
+    return new Response(`<p>Photo: AP</p><div class="source source--with-label">Source: ${input === url ? "AFP/lk" : "AP/CNA/lk"}</div>`);
+  } });
+  const first = await f.service.refresh();
+  assert.equal(first.items.find((row) => row.url === url).publisherId, "afp.com");
+  assert.match(first.items.find((row) => row.url === url).sourceTitle, /法新社.*CNA 刊载/);
+  assert.equal(first.items.find((row) => row.url === otherUrl).publisherId, "channelnewsasia.com");
+  const articleChecks = f.calls.filter((call) => call.url === url).length;
+  assert.equal(articleChecks, 1);
+  const second = await f.service.refresh();
+  assert.equal(second.items.find((row) => row.url === url).publisherId, "afp.com");
+  assert.equal(f.calls.filter((call) => call.url === url).length, articleChecks);
+});
+
 test("the Latin America edition passes important Spanish news and filters entertainment", async (t) => {
   const latam = weeklySources.find((row) => row.id === "france24-latam");
   const url = "https://www.france24.com/es/am%C3%A9rica-latina/20261029-paraguay";
