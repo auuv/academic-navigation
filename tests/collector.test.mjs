@@ -37,6 +37,13 @@ test("RSS/Atom parsing preserves publication dates, rejects entity declarations 
   assert.throws(() => parseFeed('<!DOCTYPE rss [<!ENTITY x SYSTEM "file:///etc/passwd">]><rss/>', source.feedUrl));
   assert.throws(() => publisherUrl("https://127.0.0.1/", source)); assert.throws(() => publisherUrl("https://evil.example/", source));
 });
+test("Media RSS extensions cannot replace the article title and RDF dates remain supported", () => {
+  const mediaRss = feed.replace("<rss>", '<rss xmlns:media="http://search.yahoo.com/mrss/">')
+    .replace("</title>", "</title><media:title>Photo caption</media:title>");
+  assert.equal(parseFeed(mediaRss, source.feedUrl)[0].title, "EU parliament approves new trade law");
+  const rdf = '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><item><title>New trade law</title><link>https://example.org/analysis/law</link><dc:date>2026-10-29T08:00:00Z</dc:date></item></rdf:RDF>';
+  assert.equal(parseFeed(rdf, source.feedUrl)[0].publishedAt, "2026-10-29T08:00:00Z");
+});
 test("refresh persists a shared snapshot and another service instance reads it without refetching", async (t) => {
   const f = await fixture(t), result = await f.service.refresh();
   assert.equal(result.items.length, 1); assert.equal(result.sources[0].state, "completed"); assert.equal(result.refreshing, false);
