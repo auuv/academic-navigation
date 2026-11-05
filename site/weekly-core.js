@@ -12,8 +12,8 @@
     ["中东", /middle east|israel|palestin|\bgaza\b|\biran\b|lebanon|syria|yemen|saudi|qatar|\buae\b|emirates|\boman\b|jordan|turkey|türkiye|中东|以色列|巴勒斯坦|加沙|伊朗|黎巴嫩|叙利亚|也门|沙特|卡塔尔|阿联酋|阿曼|土耳其/i],
     ["欧洲", /europe|\beu\b|britain|british|united kingdom|\buk\b|london|france|french|german|spain|spanish|italy|italian|ukraine|poland|netherlands|sweden|norway|eurozone|欧洲|欧盟|英国|法国|德国|西班牙|意大利|乌克兰|波兰|荷兰|瑞典|挪威/i],
     ["俄罗斯与中亚", /russia|moscow|central asia|kazakhstan|uzbekistan|kyrgyz|tajik|turkmen|俄罗斯|莫斯科|中亚|哈萨克斯坦|乌兹别克|吉尔吉斯|塔吉克|土库曼/i],
-    ["北美", /united states|american|washington|canada|canadian|estados unidos|\bee\.\s?uu\b|canadá|美国|华盛顿|加拿大|北美/i],
-    ["拉美与加勒比", /latin america|am[eé]rica latina|latinoam[eé]rica|caribbean|\bcaribe\b|m[eé]xic|brazil|\bbrasil\b|argentin|colombia|chile|venezuela|\bper[uú](?!\p{L})|ecuador|\bcuba\b|hait[ií]|bolivia|paraguay|uruguay|guatemala|honduras|nicaragua|costa rica|el salvador|panam[aá]|guyana|suriname|dominican republic|república dominicana|拉美|拉丁美洲|加勒比|墨西哥|巴西|阿根廷|哥伦比亚|智利|委内瑞拉|秘鲁|厄瓜多尔|古巴|海地/iu],
+    ["北美", /united states|(?<!latin )(?<!south )(?<!central )\bamerican(?:s)?\b|washington|canada|canadian|estados unidos|\bee\.\s?uu\b|canadá|美国|华盛顿|加拿大|北美/i],
+    ["拉美与加勒比", /latin america|am[eé]rica latina|latinoam[eé]rica|iberoamerican[ao]|caribbean|\bcaribe\b|m[eé]xic|brazil|\bbrasil\b|argentin|colombia|chile|venezuela|\bper[uú](?!\p{L})|ecuador|\bcuba\b|hait[ií]|bolivia|paraguay|uruguay|guatemala|honduras|nicaragua|costa rica|el salvador|panam[aá]|guyana|suriname|dominican republic|república dominicana|拉美|拉丁美洲|加勒比|墨西哥|巴西|阿根廷|哥伦比亚|智利|委内瑞拉|秘鲁|厄瓜多尔|古巴|海地/iu],
     ["非洲", /africa|sudan|sahel|nigeria|kenya|ethiopia|somalia|congo|rwanda|uganda|zimbabwe|ghana|\bmali\b|egypt|libya|tunisia|morocco|algeria|非洲|苏丹|萨赫勒|尼日利亚|肯尼亚|埃塞俄比亚|索马里|刚果|卢旺达|乌干达|埃及|利比亚|突尼斯|摩洛哥|阿尔及利亚/i],
     ["大洋洲", /oceania|australia|new zealand|pacific island|fiji|solomon islands|papua new guinea|大洋洲|澳大利亚|新西兰|太平洋岛国|斐济|所罗门|巴布亚新几内亚/i]
   ];

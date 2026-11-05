@@ -91,6 +91,7 @@ test("weekly news subscriptions are anchored in the news directory", () => {
     assert.equal(publisherUrl(row.feedUrl, row), row.feedUrl);
   }
   assert.equal(new Set(news.filter((row) => row.id.startsWith("france24-")).map((row) => row.publisherId)).size, 1);
+  assert.equal(news.find((row) => row.id === "guardian-americas").publisherId, news.find((row) => row.id === "guardian").publisherId);
 });
 
 test("the Latin America edition passes important Spanish news and filters entertainment", async (t) => {
@@ -105,4 +106,6 @@ test("the Latin America edition passes important Spanish news and filters entert
   const issue = core.selectIssue(data.items, "2026-10-26", { region: "拉美与加勒比" });
   assert.deepEqual(issue.news.map((row) => row.url), [url]);
   assert.deepEqual(issue.news[0].regions, ["拉美与加勒比"]);
+  const summit = core.normalizeEntry({ title: "La Cumbre Iberoamericana reúne a los líderes", url, publishedAt: "2026-10-29" }, latam, now);
+  assert.deepEqual(summit.item.regions, ["拉美与加勒比"]);
 });
