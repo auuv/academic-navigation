@@ -3,6 +3,9 @@ import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import fs from "node:fs/promises";
 import { createWeeklyCollector, parseFeed, publisherUrl } from "../lib/weekly-collector.mjs";
+import weeklySources from "../lib/data/weekly-sources.json" with { type: "json" };
+import core from "../lib/weekly-core.cjs";
+import "../site/resource-catalog.js";
 
 const now = Date.parse("2026-10-30T02:00:00Z");
 const source = { id: "example", title: "Example", kind: "report", feedUrl: "https://example.org/feed", siteUrl: "https://example.org/", defaultRegion: "欧洲" };
@@ -76,4 +79,30 @@ test("online assets contain no local documents, file paths, localhost requests o
     const text = await fs.readFile(new URL(`../site/${file}`, import.meta.url), "utf8");
     assert.ok(!/\/Users\/|file:\/\/|127\.0\.0\.1|api\/local-documents|collectionKey|collectionDialog/.test(text), file);
   }
+});
+
+test("weekly news subscriptions are anchored in the news directory", () => {
+  const urls = new Set(globalThis.ResourceCatalog.newsSources.map((entry) => entry.url));
+  const news = weeklySources.filter((row) => row.kind === "news");
+  assert.equal(new Set(news.map((row) => row.id)).size, news.length);
+  for (const row of news) {
+    assert.ok(urls.has(row.siteUrl), row.title);
+    assert.ok(core.regions.includes(row.defaultRegion), row.title);
+    assert.equal(publisherUrl(row.feedUrl, row), row.feedUrl);
+  }
+  assert.equal(new Set(news.filter((row) => row.id.startsWith("france24-")).map((row) => row.publisherId)).size, 1);
+});
+
+test("the Latin America edition passes important Spanish news and filters entertainment", async (t) => {
+  const latam = weeklySources.find((row) => row.id === "france24-latam");
+  const url = "https://www.france24.com/es/am%C3%A9rica-latina/20261029-paraguay";
+  const rss = `<rss><channel>
+    <item><title>Diputados de Paraguay debaten un juicio político contra el presidente</title><link>${url}</link><pubDate>Thu, 29 Oct 2026 08:00:00 GMT</pubDate></item>
+    <item><title>Un concierto de música reúne a sus seguidores en México</title><link>${url}-cultura</link><pubDate>Thu, 29 Oct 2026 08:00:00 GMT</pubDate></item>
+  </channel></rss>`;
+  const f = await fixture(t, { sourceList: [latam], transport: () => new Response(rss) });
+  const data = await f.service.refresh();
+  const issue = core.selectIssue(data.items, "2026-10-26", { region: "拉美与加勒比" });
+  assert.deepEqual(issue.news.map((row) => row.url), [url]);
+  assert.deepEqual(issue.news[0].regions, ["拉美与加勒比"]);
 });

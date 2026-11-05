@@ -183,5 +183,85 @@
         "type": "listing"
       }
     ]
+  },
+  {
+    "id": "nytimes",
+    "siteUrl": "https://www.nytimes.com/",
+    "kind": "news",
+    "feedUrl": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+    "title": "The New York Times · World",
+    "publisherId": "nytimes.com",
+    "defaultRegion": "全球议题",
+    "articleHosts": []
+  },
+  {
+    "id": "scmp-china",
+    "siteUrl": "https://www.scmp.com/",
+    "kind": "news",
+    "feedUrl": "https://www.scmp.com/rss/4/feed/",
+    "title": "南华早报 · 中国",
+    "publisherId": "scmp.com",
+    "defaultRegion": "东亚",
+    "articleHosts": []
+  },
+  {
+    "id": "yonhap",
+    "siteUrl": "https://en.yna.co.kr/",
+    "kind": "news",
+    "feedUrl": "https://en.yna.co.kr/RSS/news.xml",
+    "title": "韩联社 · 英文",
+    "publisherId": "en.yna.co.kr",
+    "defaultRegion": "东亚",
+    "articleHosts": []
+  },
+  {
+    "id": "thehindu",
+    "siteUrl": "https://www.thehindu.com/",
+    "kind": "news",
+    "feedUrl": "https://www.thehindu.com/news/national/feeder/default.rss",
+    "title": "The Hindu · 印度",
+    "publisherId": "thehindu.com",
+    "defaultRegion": "南亚",
+    "articleHosts": []
+  },
+  {
+    "id": "bangkokpost",
+    "siteUrl": "https://www.bangkokpost.com/",
+    "kind": "news",
+    "feedUrl": "https://www.bangkokpost.com/rss/data/topstories.xml",
+    "title": "Bangkok Post · 头条",
+    "publisherId": "bangkokpost.com",
+    "defaultRegion": "东南亚",
+    "articleHosts": []
+  },
+  {
+    "id": "france24-africa",
+    "siteUrl": "https://www.france24.com/en/",
+    "kind": "news",
+    "feedUrl": "https://www.france24.com/en/africa/rss",
+    "title": "France 24 · 非洲",
+    "publisherId": "france24.com",
+    "defaultRegion": "非洲",
+    "articleHosts": []
+  },
+  {
+    "id": "france24-latam",
+    "siteUrl": "https://www.france24.com/en/",
+    "kind": "news",
+    "feedUrl": "https://www.france24.com/es/am%C3%A9rica-latina/rss",
+    "title": "France 24 · 拉美（西语）",
+    "publisherId": "france24.com",
+    "defaultRegion": "拉美与加勒比",
+    "articleHosts": []
+  },
+  {
+    "id": "abc-australia",
+    "siteUrl": "https://www.abc.net.au/news/",
+    "kind": "news",
+    "feedUrl": "https://www.abc.net.au/news/feed/1534/rss.xml",
+    "title": "ABC Australia · 政治",
+    "publisherId": "abc.net.au",
+    "defaultRegion": "大洋洲",
+    "articleHosts": []
   }
 ]
