@@ -17,6 +17,16 @@ function cnkiRss(code) {
 
 const journals = [
   {
+    title: "周刊文春 / 週刊文春",
+    category: "综合时事周刊",
+    url: "https://bunshun.jp/list/magazine/shukan-bunshun",
+    level: "日本综合周刊 / 部分订阅",
+    aliases: ["文春周刊", "週刊文春", "周刊文春", "Shukan Bunshun", "Shūkan Bunshun"],
+    tags: ["日文", "日本", "周刊", "时政", "社会", "调查报道", "文艺春秋"],
+    description: "文艺春秋出版社旗下综合周刊，覆盖日本政治、社会、调查报道及文化话题。主入口提供文章与最新期目次，电子版部分内容需订阅。",
+    actions: [{ label: "电子版", url: "https://bunshun.jp/denshiban" }]
+  },
+  {
     title: "Web of Science / WoS",
     category: "检索入口与工作论文",
     url: "https://webofscience.clarivate.cn/wos/woscc/basic-search",
