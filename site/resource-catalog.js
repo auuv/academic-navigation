@@ -681,6 +681,17 @@ const journals = [
     description: "产业经济、企业行为、工业发展和中国经济研究重要期刊；点击进入知网该刊详情页。"
   },
   {
+    title: "数量经济技术经济研究",
+    category: "计量与方法",
+    url: "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
+    level: "中文学术月刊",
+    cnkiCode: "SLJY",
+    aliases: ["数经技经", "Journal of Quantitative & Technological Economics", "The Journal of Quantitative & Technical Economics", "JQTE"],
+    tags: ["数量经济", "技术经济", "计量经济", "政策评估", "科技创新", "中文"],
+    description: "中国社会科学院数量经济与技术经济研究所主办，聚焦数量经济与技术经济的理论、方法及应用研究。官网提供期刊目录、论文信息及数据和代码等附件。",
+    actions: [{ label: "知网", url: cnkiJournalPage("SLJY") }, { label: "国家哲社文献中心", url: "https://www.ncpssd.cn/journal/details?gch=94503X&langType=1&nav=1" }]
+  },
+  {
     title: "统计研究",
     category: "计量与方法",
     url: cnkiJournalPage("TJYJ"),
