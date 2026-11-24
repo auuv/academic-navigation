@@ -731,7 +731,7 @@ function createStarButton(item, mode) {
     renderState();
     return button;
 }
-function createResourceCard({ category, title, description, detail, meta, tags = [], url, linkText = "打开", actions = [], starItem, starMode }) {
+function createResourceCard({ category, title, description, detail, meta, tags = [], url, linkUrl = url, linkText = "打开", actions = [], starItem, starMode }) {
     const card = document.createElement("article");
     card.className = "resource-card";
     card.innerHTML = `
@@ -758,7 +758,7 @@ function createResourceCard({ category, title, description, detail, meta, tags =
         detailEl.hidden = false;
     }
     const mainLink = card.querySelector(".main-link");
-    mainLink.href = url;
+    mainLink.href = linkUrl;
     mainLink.textContent = linkText;
     const actionsEl = card.querySelector(".card-actions");
     if (starItem && starMode) {
@@ -794,9 +794,10 @@ function renderJournals() {
             meta: journal.cnkiCode ? `${journal.level} · CNKI ${journal.cnkiCode}` : journal.level,
             tags: journal.tags,
             url: journal.url,
+            linkUrl: journal.issueUrl || journal.url,
             starItem: journal,
             starMode: "journals",
-            linkText: (journal.tags || []).includes("知网") ? "知网" : "打开",
+            linkText: journal.issueUrl ? "查看目录" : (journal.tags || []).includes("知网") ? "知网" : "打开",
             actions: [
                 ...(journal.actions || []),
                 ...(journal.rssUrl
